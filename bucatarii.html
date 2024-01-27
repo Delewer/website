@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    .container {
+      display: flex;
+      position: relative;
+      z-index: 1;
+      margin-left: 125px; 
+    }
+
+    .card {
+      margin: 10px;
+      cursor: pointer;
+      border: 2px solid #ddd;
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      text-align: center;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card:hover {
+      border-color: #aaa;
+    }
+
+    .card__image {
+      width: 150px;
+      height: 150px;
+      object-fit: cover;
+    }
+
+    .enlarged {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 999;
+    }
+
+    .enlarged img {
+      max-width: 80%;
+      max-height: 80%;
+      object-fit: contain;
+    }
+
+    .svg-icon {
+      animation: jello-horizontal .9s linear both;
+    }
+
+    @keyframes jello-horizontal {
+      0% {
+        transform: scale3d(1, 1, 1);
+      }
+      30% {
+        transform: scale3d(1.25, .75, 1);
+      }
+      40% {
+        transform: scale3d(.75, 1.25, 1);
+      }
+      50% {
+        transform: scale3d(1.15, .85, 1);
+      }
+      65% {
+        transform: scale3d(.95, 1.05, 1);
+      }
+      75% {
+        transform: scale3d(1.05, .95, 1);
+      }
+      100% {
+        transform: scale3d(1, 1, 1);
+      }
+    }
+
+    .nav__cont {
+      position: fixed;
+      width: 80px;
+      top: 0;
+      margin-left: -15px;
+      height: 100vh;
+      z-index: 100;
+      background-color: #491a14;
+      overflow: hidden;
+      transition: width 0.3s ease, margin-left 0.3s ease; /* Добавлено свойство для плавности движения */
+      cursor: pointer;
+      box-shadow: 4px 7px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .nav__cont:hover {
+      width: 150px;
+    }
+
+    .nav__cont-shifted {
+      margin-left: 150px; /* Замените 150px на нужное вам значение, равное ширине вашего меню */
+    }
+
+    @media screen and (min-width: 600px) {
+      .nav__cont {
+        width: 95px;
+      }
+    }
+
+    .nav {
+      list-style-type: none;
+      color: rgb(255, 255, 255);
+      padding: 0;
+      margin: 0;
+    }
+
+    .nav__items {
+      margin-top: 30px;
+      padding-bottom: 4rem;
+      font-family: 'Roboto', sans-serif;
+      text-align: center;
+    }
+
+    .nav__items a {
+      display: block;
+      padding-top: 1rem;
+      padding-bottom: 1rem;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      color: rgb(255, 255, 255);
+      font-family: 'Roboto', sans-serif;
+      font-weight: 100;
+      font-size: 1.35em;
+    }
+
+    .nav__items:hover a {
+      background-color: #333;
+    }
+
+    .nav__items svg {
+      width: 30px;
+      height: 30px;
+      margin-bottom: 0.5rem;
+      cursor: pointer;
+    }
+
+    @media screen and (min-width: 600px) {
+      .nav__items svg {
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .wrapper {
+      position: relative;
+    }
+
+    .arrow {
+      cursor: pointer;
+      font-size: 24px;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      color: white;
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 10px;
+      display: none;
+    }
+
+    .left {
+      left: 0;
+    }
+
+    .right {
+      right: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav__cont">
+    <ul class="nav">
+      <li class="nav__items">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" class="nav__icon">
+          <g id="home">
+            <path fill="#90A4AE" d="M42,48H6c-3.3,0-6-2.7-6-6V6c0-3.3,2.7-6,6-6h36c3.3,0,6,2.7,6,6v36C48,45.3,45.3,48,42,48z"/>
+            <path fill="#212121" d="M20.8,35.5v-9.6h6.4v9.6h8V22.7H40L24,8.3L8,22.7h4.8v12.8H20.8z"/>
+          </g>
+        </svg>
+        <a href="index.html">Home</a>
+      </li>
+
+      <li class="nav__items">
+        <svg class="svg-icon" viewBox="0 0 20 20">
+          <path d="M12.075,10.812c1.358-0.853,2.242-2.507,2.242-4.037c0-2.181-1.795-4.618-4.198-4.618S5.921,4.594,5.921,6.775c0,1.53,0.884,3.185,2.242,4.037c-3.222,0.865-5.6,3.807-5.6,7.298c0,0.23,0.189,0.42,0.42,0.42h14.273c0.23,0,0.42-0.189,0.42-0.42C17.676,14.619,15.297,11.677,12.075,10.812 M6.761,6.775c0-2.162,1.773-3.778,3.358-3.778s3.359,1.616,3.359,3.778c0,2.162-1.774,3.778-3.359,3.778S6.761,8.937,6.761,6.775 M3.415,17.69c0.218-3.51,3.142-6.297,6.704-6.297c3.562,0,6.486,2.787,6.705,6.297H3.415z"></path>
+        </svg>
+        <a href="about.html">Despre noi</a>
+      </li>
+
+      <li class="nav__items">
+        <svg class="svg-icon" viewBox="0 0 20 20">
+          <path d="M17.659,3.681H8.468c-0.211,0-0.383,0.172-0.383,0.383v2.681H2.341c-0.21,0-0.383,0.172-0.383,0.383v6.126c0,0.211,0.172,0.383,0.383,0.383h1.532v2.298c0,0.566,0.554,0.368,0.653,0.27l2.569-2.567h4.437c0.21,0,0.383-0.172,0.383-0.383v-2.681h1.013l2.546,2.567c0.242,0.249,0.652,0.065,0.652-0.27v-2.298h1.533c0.211,0,0.383-0.172,0.383-0.382V4.063C18.042,3.853,17.87,3.681,17.659,3.681 M11.148,12.87H6.937c-0.102,0-0.199,0.04-0.27,0.113l-2.028,2.025v-1.756c0-0.211-0.172-0.383-0.383-0.383H2.724V7.51h5.361v2.68c0,0.21,0.172,0.382,0.383,0.382h2.68V12.87z M17.276,9.807h-1.533c-0.211,0-0.383,0.172-0.383,0.383v1.755L13.356,9.92c-0.07-0.073-0.169-0.113-0.27-0.113H8.851v-5.36h8.425V9.807z"></path>
+        </svg>
+        <a href="contacts.html">Contacte</a>
+      </li>
+    </ul>
+  </div>
+
+  <div class="container">
+    <div class="card" onclick="toggleEnlarge('Товар 1', ['img/b1 (1).jpg', 'img/b1 (2).jpg'])">
+      <img src="img/b1 (1).jpg" alt="Товар 1" class="card__image">
+      <div class="card__name">Bucatarie</div>
+    </div>
+
+    <div class="card" onclick="toggleEnlarge('Товар 2', ['img/b2 (1).jpg', 'img/b2 (2).jpg', 'img/b2 (3).jpg', 'img/b2 (4).jpg'])">
+      <img src="img/b2 (1).jpg" alt="Товар 2" class="card__image">
+      <div class="card__name">Bucatarie 1</div>
+      </div>
+
+    <div class="card" onclick="toggleEnlarge('Товар 2', ['img/b3.jpg'])">
+      <img src="img/b3.jpg" alt="Товар 2" class="card__image">
+      <div class="card__name">Bucatarie 2</div>
+    </div>
+
+    <div class="card" onclick="toggleEnlarge('Товар 2', ['images/sofa.jpg', 'images/bed.jpg', 'images/product2.jpg'])">
+      <img src="images/sofa.jpg" alt="Товар 2" class="card__image">
+      <div class="card__name">Bucatarie 1</div>
+    </div>
+
+    <div class="card" onclick="toggleEnlarge('Товар 1', ['img/b1 (1).jpg', 'img/b1 (2).jpg'])">
+      <img src="img/b1 (1).jpg" alt="Товар 1" class="card__image">
+      <div class="card__name">Bucatarie</div>
+    </div>
+
+    <div class="card" onclick="toggleEnlarge('Товар 2', ['images/sofa.jpg', 'images/bed.jpg', 'images/product2.jpg'])">
+      <img src="images/sofa.jpg" alt="Товар 2" class="card__image">
+      <div class="card__name">Bucatarie 1</div>
+      </div>
+
+    <div class="card" onclick="toggleEnlarge('Товар 2', ['images/sofa.jpg', 'images/bed.jpg', 'images/product2.jpg'])">
+      <img src="images/sofa.jpg" alt="Товар 2" class="card__image">
+      <div class="card__name">Bucatarie 1</div>
+    </div>
+
+    <div class="card" onclick="toggleEnlarge('Товар 2', ['images/sofa.jpg', 'images/bed.jpg', 'images/product2.jpg'])">
+      <img src="images/sofa.jpg" alt="Товар 2" class="card__image">
+      <div class="card__name">Bucatarie 1</div>
+    </div>
+
+
+
+  </div>
+
+
+
+
+
+
+  <script>
+    let currentImageIndex = 0;
+
+    function toggleEnlarge(productName, imageArray) {
+      const enlargedContainer = document.querySelector('.enlarged');
+      if (!enlargedContainer) {
+        showImageInEnlarge(imageArray[currentImageIndex], productName, imageArray);
+      }
+    }
+
+    function showImageInEnlarge(imageSrc, productName, imageArray) {
+      const enlargedContainer = document.createElement('div');
+      enlargedContainer.classList.add('enlarged');
+
+      const enlargedImage = document.createElement('img');
+      enlargedImage.src = imageSrc;
+      enlargedImage.alt = productName;
+
+      const leftArrow = document.createElement('div');
+      leftArrow.classList.add('arrow', 'left');
+      leftArrow.onclick = () => changeImageInEnlarge(-1, enlargedImage, imageArray);
+      leftArrow.innerHTML = '&#9665;';
+
+      const rightArrow = document.createElement('div');
+      rightArrow.classList.add('arrow', 'right');
+      rightArrow.onclick = () => changeImageInEnlarge(1, enlargedImage, imageArray);
+      rightArrow.innerHTML = '&#9655;';
+
+      enlargedContainer.appendChild(enlargedImage);
+      enlargedContainer.appendChild(leftArrow);
+      enlargedContainer.appendChild(rightArrow);
+
+      enlargedContainer.addEventListener('click', (event) => {
+        if (!event.target.classList.contains('arrow')) {
+          enlargedContainer.remove();
+        }
+      });
+
+      document.body.appendChild(enlargedContainer);
+
+      leftArrow.style.display = 'block';
+      rightArrow.style.display = 'block';
+    }
+
+    function changeImageInEnlarge(direction, enlargedImage, imageArray) {
+      currentImageIndex += direction;
+
+      if (currentImageIndex < 0) {
+        currentImageIndex = imageArray.length - 1;
+      } else if (currentImageIndex >= imageArray.length) {
+        currentImageIndex = 0;
+      }
+
+      enlargedImage.src = imageArray[currentImageIndex];
+    }
+  </script>
+
+
+</body>
+</html>
